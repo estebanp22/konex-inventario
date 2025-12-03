@@ -20,6 +20,10 @@ public class MedicamentoValidator {
             throw new DomainException("La fecha de fabricación no puede ser posterior a la fecha de vencimiento.");
         }
 
+        if (medicamento.getFechaFabricacion().isEqual(medicamento.getFechaVencimiento())) {
+            throw new DomainException("La fecha de fabricación no puede ser igual a la fecha de vencimiento.");
+        }
+
         if (medicamento.getCantidadStock() != null && medicamento.getCantidadStock() < 0) {
             throw new DomainException("La cantidad en stock no puede ser negativa.");
         }
