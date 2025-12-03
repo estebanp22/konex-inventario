@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public interface VentaUseCase {
 
-    Page<Venta> listarVentasPorRangoFechas(LocalDateTime desde,
-                                           LocalDateTime hasta,
+    Page<Venta> listarVentasPorRangoFechas(LocalDateTime fechaInicio,
+                                           LocalDateTime fechaFin,
                                            Pageable pageable);
 }

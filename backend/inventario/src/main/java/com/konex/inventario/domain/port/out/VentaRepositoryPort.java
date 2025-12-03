@@ -10,5 +10,7 @@ public interface VentaRepositoryPort {
 
     Venta save(Venta venta);
 
-    Page<Venta> findByFechaBetween(LocalDateTime desde, LocalDateTime hasta, Pageable pageable);
+    Page<Venta> findByFechaBetween(LocalDateTime desde,
+                                   LocalDateTime hasta,
+                                   Pageable pageable);
 }
