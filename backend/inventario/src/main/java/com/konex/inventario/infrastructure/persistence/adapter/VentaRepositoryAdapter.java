@@ -35,4 +35,9 @@ public class VentaRepositoryAdapter implements VentaRepositoryPort {
         return jpaRepository.findByFechaHoraBetween(desde, hasta, pageable)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public boolean existsByMedicamentoId(Long medicamentoId) {
+        return jpaRepository.existsByMedicamento_Id(medicamentoId);
+    }
 }

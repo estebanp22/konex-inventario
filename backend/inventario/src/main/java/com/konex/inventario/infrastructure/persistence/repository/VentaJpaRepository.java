@@ -12,4 +12,7 @@ public interface VentaJpaRepository extends JpaRepository<VentaEntity, Long> {
     Page<VentaEntity> findByFechaHoraBetween(LocalDateTime desde,
                                              LocalDateTime hasta,
                                              Pageable pageable);
+
+    boolean existsByMedicamento_Id(Long medicamentoId);
+
 }
