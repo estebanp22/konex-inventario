@@ -1,0 +1,38 @@
+<p-dialog
+  header="Vender medicamento"
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '400px' }"
+  (onHide)="cerrar()"
+>
+  <ng-container *ngIf="medicamento">
+    <div class="mb-3">
+      <strong>{{ medicamento.nombre }}</strong><br />
+      <small>Laboratorio: {{ medicamento.laboratorio }}</small><br />
+      <small>Stock actual: {{ medicamento.cantidadStock }}</small><br />
+      <small>Valor unitario: {{ medicamento.valorUnitario | currency:'COP':'symbol-narrow' }}</small>
+    </div>
+
+    <div class="mb-3">
+      <label for="cantidad" class="block mb-2">Cantidad a vender</label>
+      <p-inputNumber
+        inputId="cantidad"
+        [(ngModel)]="cantidad"
+        [min]="1"
+        [max]="medicamento.cantidadStock"
+        [showButtons]="true"
+      ></p-inputNumber>
+    </div>
+
+    <div class="mb-3">
+      <strong>Valor total:</strong>
+      {{ valorTotal | currency:'COP':'symbol-narrow' }}
+    </div>
+
+    <div class="flex justify-content-end gap-2">
+      <button pButton type="button" label="Cancelar" class="p-button-text" (click)="cerrar()"></button>
+      <button pButton type="button" label="Confirmar venta" (click)="confirmar()" [disabled]="!cantidad || cantidad <= 0"></button>
+    </div>
+  </ng-container>
+</p-dialog>
