@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
+import {Toast, ToastModule} from 'primeng/toast';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, MenubarModule],
+  imports: [RouterOutlet, MenubarModule, Toast, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

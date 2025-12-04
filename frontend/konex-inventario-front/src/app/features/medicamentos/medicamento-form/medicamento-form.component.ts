@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { MedicamentoService } from '../../../services/medicamento.service';
@@ -12,13 +12,13 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-medicamento-form',
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     ReactiveFormsModule,
     InputTextModule,
     InputNumberModule,
@@ -41,7 +41,8 @@ export class MedicamentoFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private medicamentoService: MedicamentoService
+    private medicamentoService: MedicamentoService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -121,12 +122,21 @@ export class MedicamentoFormComponent implements OnInit {
       this.medicamentoService.createMedicamento(payload)
         .subscribe({
           next: () => {
-            this.cargando = false;
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Creado',
+              detail: 'Medicamento registrado correctamente.',
+              life: 3000
+            });
             this.router.navigate(['/medicamentos']);
           },
-          error: (err) => {
-            console.error('Error creando', err);
-            this.cargando = false;
+          error: err => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error al crear',
+              detail: err?.error?.message || 'No se pudo crear el medicamento.',
+              life: 4000
+            });
           }
         });
     }

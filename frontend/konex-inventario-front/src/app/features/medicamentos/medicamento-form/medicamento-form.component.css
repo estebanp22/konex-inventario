@@ -1,0 +1,10 @@
+.form-grid .p-inputtext,
+.form-grid .p-inputnumber-input,
+.form-grid .p-datepicker {
+  width: 100%;
+}
+
+.p-card {
+  max-width: 900px;
+  margin: 0 auto;
+}
