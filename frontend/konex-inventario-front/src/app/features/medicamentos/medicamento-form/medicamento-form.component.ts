@@ -111,17 +111,30 @@ export class MedicamentoFormComponent implements OnInit {
         .subscribe({
           next: () => {
             this.cargando = false;
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Actualizado',
+              detail: 'Medicamento actualizado correctamente.',
+              life: 3000
+            });
             this.router.navigate(['/medicamentos']);
           },
           error: (err) => {
             console.error('Error actualizando', err);
             this.cargando = false;
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error al actualizar',
+              detail: err?.error?.message || 'No se pudo actualizar el medicamento.',
+              life: 4000
+            });
           }
         });
     } else {
       this.medicamentoService.createMedicamento(payload)
         .subscribe({
           next: () => {
+            this.cargando = false;  // 👈 IMPORTANTE
             this.messageService.add({
               severity: 'success',
               summary: 'Creado',
@@ -131,6 +144,7 @@ export class MedicamentoFormComponent implements OnInit {
             this.router.navigate(['/medicamentos']);
           },
           error: err => {
+            this.cargando = false;  // 👈 IMPORTANTE
             this.messageService.add({
               severity: 'error',
               summary: 'Error al crear',
