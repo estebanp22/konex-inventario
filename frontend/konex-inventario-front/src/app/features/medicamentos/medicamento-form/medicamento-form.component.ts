@@ -134,7 +134,7 @@ export class MedicamentoFormComponent implements OnInit {
       this.medicamentoService.createMedicamento(payload)
         .subscribe({
           next: () => {
-            this.cargando = false;  // 👈 IMPORTANTE
+            this.cargando = false;
             this.messageService.add({
               severity: 'success',
               summary: 'Creado',
@@ -144,7 +144,7 @@ export class MedicamentoFormComponent implements OnInit {
             this.router.navigate(['/medicamentos']);
           },
           error: err => {
-            this.cargando = false;  // 👈 IMPORTANTE
+            this.cargando = false;
             this.messageService.add({
               severity: 'error',
               summary: 'Error al crear',
