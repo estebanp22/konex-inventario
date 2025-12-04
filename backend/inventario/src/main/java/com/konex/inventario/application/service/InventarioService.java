@@ -2,6 +2,7 @@ package com.konex.inventario.application.service;
 
 import com.konex.inventario.application.validator.MedicamentoValidator;
 import com.konex.inventario.application.validator.VentaValidator;
+import com.konex.inventario.domain.exception.DomainException;
 import com.konex.inventario.domain.exception.MedicamentoNoEncontradoException;
 import com.konex.inventario.domain.exception.StockInsuficienteException;
 import com.konex.inventario.domain.model.Medicamento;
@@ -61,6 +62,10 @@ public class InventarioService implements InventarioUseCase {
 
     @Override
     public void eliminarMedicamento(Long id) {
+        if (ventaRepository.existsByMedicamentoId(id)) {
+            throw new DomainException("No se puede eliminar el medicamento porque tiene ventas registradas.");
+        }
+
         medicamentoRepository.deleteById(id);
     }
 

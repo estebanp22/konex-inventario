@@ -13,4 +13,7 @@ public interface VentaRepositoryPort {
     Page<Venta> findByFechaBetween(LocalDateTime desde,
                                    LocalDateTime hasta,
                                    Pageable pageable);
+
+    boolean existsByMedicamentoId(Long medicamentoId);
+
 }
