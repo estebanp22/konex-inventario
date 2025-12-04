@@ -4,11 +4,11 @@ import com.konex.inventario.domain.model.Venta;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public interface VentaUseCase {
 
-    Page<Venta> listarVentasPorRangoFechas(LocalDateTime fechaInicio,
-                                           LocalDateTime fechaFin,
+    Page<Venta> listarVentasPorRangoFechas(LocalDate fechaInicio,
+                                           LocalDate fechaFin,
                                            Pageable pageable);
 }

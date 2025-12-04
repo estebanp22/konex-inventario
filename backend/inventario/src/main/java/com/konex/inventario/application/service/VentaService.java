@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -19,9 +20,13 @@ public class VentaService implements VentaUseCase {
     }
 
     @Override
-    public Page<Venta> listarVentasPorRangoFechas(LocalDateTime fechaInicio,
-                                                  LocalDateTime fechaFin,
+    public Page<Venta> listarVentasPorRangoFechas(LocalDate fechaInicio,
+                                                  LocalDate fechaFin,
                                                   Pageable pageable) {
-        return ventaRepository.findByFechaBetween(fechaInicio, fechaFin, pageable);
+        LocalDateTime desde = fechaInicio.atStartOfDay();
+        LocalDateTime hasta = fechaFin.atTime(23, 59, 59);
+
+        return ventaRepository.findByFechaBetween(desde, hasta, pageable);
     }
+
 }
