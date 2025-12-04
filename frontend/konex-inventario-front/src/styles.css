@@ -1,2 +1,25 @@
 @import "primeicons/primeicons.css";
-/* You can add global styles to this file, and also import other style files */
+@import "primeflex/primeflex.css";
+
+/* Fuente y fondo general */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Títulos */
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Separación estándar */
+.page-container {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+}
+
+/* Utilitario para separar secciones */
+.section {
+  margin-bottom: 1.5rem;
+}

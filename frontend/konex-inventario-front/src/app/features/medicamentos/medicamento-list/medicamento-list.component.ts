@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { Medicamento } from '../../../models/medicamento.model';
@@ -13,6 +13,9 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 
 import { VentaDialogComponent } from '../venta-dialog/venta-dialog.component';
 
@@ -21,14 +24,14 @@ import { VentaDialogComponent } from '../venta-dialog/venta-dialog.component';
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     FormsModule,
     TableModule,
     InputTextModule,
     ButtonModule,
     PaginatorModule,
     ConfirmDialogModule,
-    VentaDialogComponent
+    VentaDialogComponent,
+    ToastModule
   ],
   providers: [ConfirmationService],
   templateUrl: './medicamento-list.component.html',
@@ -48,7 +51,9 @@ export class MedicamentoListComponent implements OnInit {
   constructor(
     private medicamentoService: MedicamentoService,
     private router: Router,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+
   ) {}
 
   ngOnInit(): void {
@@ -65,9 +70,15 @@ export class MedicamentoListComponent implements OnInit {
           this.loading = false;
         },
         error: err => {
-          console.error('Error cargando medicamentos', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error al cargar medicamentos',
+            detail: err?.error?.message || 'Ocurrió un error inesperado',
+            life: 4000
+          });
           this.loading = false;
         }
+
       });
   }
 
@@ -96,8 +107,23 @@ export class MedicamentoListComponent implements OnInit {
       accept: () => {
         this.medicamentoService.deleteMedicamento(med.id!)
           .subscribe({
-            next: () => this.cargarMedicamentos(),
-            error: err => console.error('Error eliminando', err)
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Eliminado',
+                detail: 'El medicamento fue eliminado',
+                life: 2500
+              });
+              this.cargarMedicamentos();
+            },
+            error: err => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error eliminando',
+                detail: err?.error?.message || 'No se pudo eliminar.',
+                life: 4000
+              });
+            }
           });
       }
     });

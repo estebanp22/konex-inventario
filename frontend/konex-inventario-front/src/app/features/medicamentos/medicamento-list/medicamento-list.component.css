@@ -1,0 +1,15 @@
+.medicamentos-table th {
+  white-space: nowrap;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.acciones-col {
+  width: 260px;
+}

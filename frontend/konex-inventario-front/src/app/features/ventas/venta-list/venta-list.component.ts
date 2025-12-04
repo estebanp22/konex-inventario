@@ -11,6 +11,7 @@ import { TableModule } from 'primeng/table';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-venta-list',
@@ -38,7 +39,8 @@ export class VentaListComponent implements OnInit {
   totalElements = 0;
   loading = false;
 
-  constructor(private ventaService: VentaService) {}
+  constructor(private ventaService: VentaService, private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     // Por defecto, rango de hoy
@@ -62,10 +64,16 @@ export class VentaListComponent implements OnInit {
           this.totalElements = resp.totalElements;
           this.loading = false;
         },
-        error: (err) => {
-          console.error('Error cargando ventas', err);
+        error: err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error cargando ventas',
+            detail: err?.error?.message || 'No se pudo obtener el listado de ventas.',
+            life: 4000
+          });
           this.loading = false;
         }
+
       });
   }
 
