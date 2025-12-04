@@ -1,1 +1,71 @@
-<p>medicamento-form works!</p>
+<p-card>
+  <h2 class="mb-3">
+    {{ esEdicion ? 'Editar medicamento' : 'Nuevo medicamento' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid">
+    <div class="col-12 md:col-6 mb-3">
+      <label class="block mb-1">Nombre</label>
+      <input pInputText type="text" formControlName="nombre" />
+      <small class="p-error" *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched">
+        El nombre es obligatorio
+      </small>
+    </div>
+
+    <div class="col-12 md:col-6 mb-3">
+      <label class="block mb-1">Laboratorio</label>
+      <input pInputText type="text" formControlName="laboratorio" />
+      <small class="p-error" *ngIf="form.get('laboratorio')?.invalid && form.get('laboratorio')?.touched">
+        El laboratorio es obligatorio
+      </small>
+    </div>
+
+    <div class="col-12 md:col-6 mb-3">
+      <label class="block mb-1">Fecha de fabricación</label>
+      <p-datepicker
+        formControlName="fechaFabricacion"
+        dateFormat="yy-mm-dd"
+      ></p-datepicker>
+      <small class="p-error" *ngIf="form.get('fechaFabricacion')?.invalid && form.get('fechaFabricacion')?.touched">
+        La fecha de fabricación es obligatoria
+      </small>
+    </div>
+
+    <div class="col-12 md:col-6 mb-3">
+      <label class="block mb-1">Fecha de vencimiento</label>
+      <p-datepicker
+        formControlName="fechaVencimiento"
+        dateFormat="yy-mm-dd"
+      ></p-datepicker>
+      <small class="p-error" *ngIf="form.get('fechaVencimiento')?.invalid && form.get('fechaVencimiento')?.touched">
+        La fecha de vencimiento es obligatoria
+      </small>
+    </div>
+
+    <div class="col-12 md:col-6 mb-3">
+      <label class="block mb-1">Cantidad en stock</label>
+      <p-inputNumber formControlName="cantidadStock" [min]="0"></p-inputNumber>
+      <small class="p-error" *ngIf="form.get('cantidadStock')?.invalid && form.get('cantidadStock')?.touched">
+        La cantidad no puede ser negativa
+      </small>
+    </div>
+
+    <div class="col-12 md:col-6 mb-3">
+      <label class="block mb-1">Valor unitario</label>
+      <p-inputNumber
+        formControlName="valorUnitario"
+        [min]="0.01"
+        [mode]="'currency'"
+        currency="COP"
+      ></p-inputNumber>
+      <small class="p-error" *ngIf="form.get('valorUnitario')?.invalid && form.get('valorUnitario')?.touched">
+        El valor unitario debe ser mayor a 0
+      </small>
+    </div>
+
+    <div class="col-12 flex justify-content-end gap-2 mt-3">
+      <button pButton type="button" label="Cancelar" class="p-button-text" (click)="cancelar()"></button>
+      <button pButton type="submit" label="Guardar" [disabled]="form.invalid || cargando"></button>
+    </div>
+  </form>
+</p-card>
