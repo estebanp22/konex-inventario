@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestController
@@ -30,9 +31,9 @@ public class VentaController {
     @GetMapping
     public ResponseEntity<Page<VentaResponse>> listarPorRangoFechas(
             @RequestParam("fechaInicio")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fechaInicio,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
             @RequestParam("fechaFin")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fechaFin,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
 
@@ -41,4 +42,5 @@ public class VentaController {
         Page<VentaResponse> responsePage = pageVentas.map(ventaMapper::toResponse);
         return ResponseEntity.ok(responsePage);
     }
+
 }
